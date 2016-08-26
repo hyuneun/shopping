@@ -34,7 +34,7 @@ window.onload = function(){
 				</tr>
 				<tr>
 					<td>패스워드</td>
-					<td><input type="password" name="passwd" size="15"></td>
+					<td><input type="password" name="passed" size="15"></td>
 				</tr>
 				<tr>
 					<td>패스워드 확인</td>
