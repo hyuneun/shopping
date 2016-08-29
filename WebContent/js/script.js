@@ -21,7 +21,7 @@ function inputCheck(){
 	document.regForm.submit();
 }
 
-//회원수정
+//게스트가 회원수정
 function memberUpdate(){
 	//입력자료오류검사 생략
 	document.updateForm.submit();
@@ -36,6 +36,33 @@ function memberDelete(){
 	alert("탈퇴안됌ㅋㅋㅋㅋㅋ")
 }
 
+//관리자에서 회원수정
+function memUpdate(id){
+	document.updateFrm.id.value = id
+	document.updateFrm.submit();
+}
+
+function memberUpdateAdmin(){
+	document.updateFormAdmin.submit();
+}
 
 
+function memberUpdateCancelAdmin(){
+	location.href = "membermanager.jsp";
+}
 
+//관리자에서 상품처리
+function productDetail(no){
+	document.detailFrm.no.value = no
+	document.detailFrm.submit();
+}
+
+function productUpdate(no){
+	document.updateFrm.no.value = no
+	document.updateFrm.submit();
+}
+
+function productDelete(no){
+	document.deleteFrm.no.value = no
+	document.deleteFrm.submit();
+}

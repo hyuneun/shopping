@@ -236,6 +236,100 @@ public class MemberMgr {
 		return b;
 	}
 	
+	public boolean adminlogincheck(String 어드민아이디,String passwd){
+		boolean b = false;
+		try {
+			conn = ds.getConnection();
+			String sql = "select * from admin where admin_id=? and admin_passwd=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, 어드민아이디);
+			pstmt.setString(2, passwd);
+			rs = pstmt.executeQuery();
+			b = rs.next();
+		} catch (Exception e) {
+			System.out.println("save에러" + e);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("asd");
+			}
+		}
+		
+		return b;
+	}
 	
+	//관리자 전체회원읽기
+	public ArrayList<MemberBean> getMemberAll(){
+		ArrayList<MemberBean> list = new ArrayList<>();
+		try {
+			conn = ds.getConnection();
+			String sql = "select * from member order by id asc";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()){
+				MemberBean bean = new MemberBean();
+				bean.setId(rs.getString("id"));
+				bean.setPassed(rs.getString("passwd"));
+				bean.setName(rs.getString("name"));
+				bean.setEmail(rs.getString("email"));
+				bean.setPhone(rs.getString("phone"));
+				list.add(bean);
+			}
+		}catch (Exception e) {
+			System.out.println("save에러" + e);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("asd");
+			}
+		}
+		return list;
+	}
+	
+	public boolean saveMember(MemberBean bean,String id){
+		boolean b = false;
+		String sql = "update member set passwd=?,name=?,email=?,phone=?,zipcode=?,address=?,job=? where id=?";
+		try{
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, bean.getPassed());
+			pstmt.setString(2, bean.getName());
+			pstmt.setString(3, bean.getEmail());
+			pstmt.setString(4, bean.getPhone());
+			pstmt.setString(5, bean.getZipcode());
+			pstmt.setString(6, bean.getAddress());
+			pstmt.setString(7, bean.getJob());
+			pstmt.setString(8, id);
+			
+			pstmt.executeUpdate();
+			if(pstmt.executeUpdate() > 0) b = true;
+		} catch (Exception e) {
+			System.out.println("save에러" + e);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("asd");
+			}
+		}
+		return b;
+	}
 	
 }
