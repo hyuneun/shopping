@@ -23,7 +23,7 @@ public class MemberMgr {
 			Context context = new InitialContext();
 			ds = (DataSource) context.lookup("java:comp/env/jdbc_maria");
 		} catch (Exception e) {
-			System.out.println("실패");
+			System.out.println("실패" + e);
 		} finally {
 			try {
 				if (rs != null)

@@ -8,8 +8,10 @@ boolean result = false;
 if(flag.equals("insert")){
 	result = productmgr.insertProduct(request);
 }else if(flag.equals("update")){
-	//result = productmgr.updateProduct(request);
+	result = productmgr.updateProduct(request);
 }else if(flag.equals("delete")){
+	result = productmgr.deleteProduct(request.getParameter("no"));
+}else{
 	response.sendRedirect("productmanager.jsp");
 }
 

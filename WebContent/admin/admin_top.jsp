@@ -12,6 +12,6 @@ if(adminid == null){
 		<td><a href="adminlogout.jsp">로그아웃</a></td>
 		<td><a href="membermanager.jsp">회원관리</a></td>
 		<td><a href="productmanager.jsp">상품관리</a></td>
-		<td><a href="ordermanager">주문관리</a></td>
+		<td><a href="ordermanager.jsp">주문관리</a></td>
 	</tr>
 </table>

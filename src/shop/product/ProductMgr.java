@@ -157,10 +157,100 @@ public class ProductMgr {
 		}
 	
 	
+		public boolean updateProduct(HttpServletRequest request){
+			boolean b = false;
+			try {
+				String uploadDir = "C:/work/websu/shoping/WebContent/data";
+				MultipartRequest multi = new MultipartRequest(request, uploadDir, 5 * 1024 * 1024, "utf-8", new DefaultFileRenamePolicy());
+				conn = ds.getConnection();
+				
+				if(multi.getFilesystemName("image") == null){
+					String sql = "update shop_product set name=?,price=?,detail=?,stock=? where no=?";
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setString(1, multi.getParameter("name"));
+					pstmt.setString(2, multi.getParameter("price"));
+					pstmt.setString(3, multi.getParameter("detail"));
+					pstmt.setString(4, multi.getParameter("stock"));
+					pstmt.setString(5, multi.getParameter("no"));
+					
+				}else{
+					String sql = "update shop_product set name=?,price=?,detail=?,stock=?,image=? where no=?";
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setString(1, multi.getParameter("name"));
+					pstmt.setString(2, multi.getParameter("price"));
+					pstmt.setString(3, multi.getParameter("detail"));
+					pstmt.setString(4, multi.getParameter("stock"));
+					pstmt.setString(5, multi.getFilesystemName("image"));
+					pstmt.setString(6, multi.getParameter("no"));
+					
+				}
+				if(pstmt.executeUpdate() > 0) b = true;
+			} catch (Exception e) {
+				System.out.println("실패" + e);
+			} finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (pstmt != null)
+						pstmt.close();
+					if (conn != null)
+						conn.close();
+				} catch (Exception e) {
+					System.out.println("asd");
+				}
+			}
+			return b;
+		}
 	
+	public boolean deleteProduct(String no){
+		boolean b = false;
+		try {
+			conn = ds.getConnection();
+			String sql = "delete from shop_product where no=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, no);
+			if(pstmt.executeUpdate() > 0) b = true;
+		}  catch (Exception e) {
+			System.out.println("실패" + e);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("asd");
+			}
+		}
+		return b;
+	}
 	
-	
-	
+	//고객이 상품주문시 주문수만큼 재고량에서 뺴는작업
+	public void reduceProduct(OrderBean order){
+		try {
+			conn = ds.getConnection();
+			String sql = "update shop_product set stock=(stock - ?) where no=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, order.getQuantify());
+			pstmt.setString(2, order.getProduct_no());
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("실패" + e);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				System.out.println("asd");
+			}
+		}
+	}
 	
 	
 }

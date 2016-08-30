@@ -63,6 +63,44 @@ function productUpdate(no){
 }
 
 function productDelete(no){
+	if(confirm("정말삭제할가요?")){
 	document.deleteFrm.no.value = no
 	document.deleteFrm.submit();
+	}
 }
+
+function productDetail(no){
+	document.detailFrm.no.value = no
+	document.detailFrm.submit();
+
+}
+
+//카트처리용
+function cartUpdate(form){
+	form.flag.value = "update";
+	form.submit();
+}
+
+function cartDelete(form){
+	form.flag.value = "del";
+	form.submit();
+}
+
+function orderDetail(no){
+	document.detailFrm.no.value = no
+	document.detailFrm.submit();
+}
+
+	//관리자가 주문처리
+function orderUpdate(form){
+	form.flag.value = "update";
+	form.submit();
+}
+function orderDelete(form){
+	form.flag.value = "delete";
+	form.submit();
+}
+
+
+
+
