@@ -32,9 +32,11 @@ if(hCart.size() == 0){
 }else{
 	//System.out.print("asd");
 	Enumeration enu = hCart.keys();//키벨류형식의 값을 읽을때 사용하는 클래스
+	//System.out.print(hCart.keys());
 	while(enu.hasMoreElements()){
 		//System.out.print("asd");
 		OrderBean order = (OrderBean)hCart.get(enu.nextElement());
+		//System.out.print(enu.nextElement());
 		ProductBean product = productMgr.getProduct(order.getProduct_no());
 		//System.out.print("___" + product.getPrice() + "__");
 		//System.out.print(order.getQuantify() + "____");
